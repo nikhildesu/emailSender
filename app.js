@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.get('/', (req,res)=> {
-    res.render('contact');
+    res.send('Welcome to email Sender app.');
 });
 
 app.post('/sendEmail' , (req,res) => {
