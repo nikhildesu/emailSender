@@ -5,7 +5,7 @@ const nodemailer = require('nodemailer');
 const path = require('path')
 
 const app = express();
-
+var PORT = process.env.port || 3000;
 app.engine('handlebars', exphbs())
 app.set('view engine', 'handlebars')
 
@@ -68,4 +68,4 @@ app.post('/sendEmail' , (req,res) => {
 })
 
 
-app.listen(3000, () => console.log('Server started'))
+app.listen(PORT, () => console.log('Server started'))
