@@ -33,7 +33,7 @@ let weatherResult;
 let message;
 
 app.get('/getUserWeather/:city', function(req, res){
-    weatherCity= req.params.city;
+    weatherCity= req.params.city.replace(/%20/g, " ");
     console.log('received weather request for city :' +weatherCity)
     weatherURL = `http://api.openweathermap.org/data/2.5/weather?q=${weatherCity}&appid=${weatherAPIKey}&units=metric`    
     console.log('Weather URL Request:' +weatherURL)
