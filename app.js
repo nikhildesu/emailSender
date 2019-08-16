@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const exphbs = require('express-handlebars')
 const nodemailer = require('nodemailer');
 const path = require('path')
+const request = require('request')
 
 const app = express();
 var port = process.env.PORT || 3000;
@@ -24,6 +25,27 @@ app.use(bodyParser.json())
 app.get('/', (req,res)=> {
     res.send('Welcome to email Sender app.');
 });
+
+let weatherAPIKey='a798f0dbb119cd15061b83ce52fa9733';
+let weatherCity='New York';
+let weatherURL;
+let weatherResult;
+let message;
+
+app.get('/getUserWeather/:city', function(req, res){
+    weatherCity= req.params.city;
+    console.log('received weather request for city :' +weatherCity)
+    weatherURL = `http://api.openweathermap.org/data/2.5/weather?q=${weatherCity}&appid=${weatherAPIKey}&units=metric`    
+    console.log('Weather URL Request:' +weatherURL)
+    request(weatherURL, (err,res,body)=>{
+        if(err){
+            console.log('Error occured while calling weather API : ', err)
+        }
+        weatherResult=JSON.parse(body)
+    })
+    console.log('Weather API response : ', weatherResult)
+    res.send(weatherResult)
+    }); 
 
 app.post('/sendEmail' , (req,res) => {
     console.log('Email request with body : ' +req.body)
